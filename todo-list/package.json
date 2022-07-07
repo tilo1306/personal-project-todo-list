@@ -9,13 +9,14 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts":[
-      "eslint --fix",
-       "git add"]
-  },
+      "*.ts": [
+        "eslint . --fix"
+      ]
+    },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install front/.husky",
+    "dev": "nodemon -e ts,json src/server.ts"
   },
   "keywords": [],
   "author": "",
