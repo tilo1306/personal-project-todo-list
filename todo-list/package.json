@@ -15,5 +15,14 @@
     "prisma": "^4.0.0",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "rimraf": "^3.0.2",
+    "validator": "^13.7.0"
   }
 }
