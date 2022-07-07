@@ -15,7 +15,7 @@
     },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install .husky",
+    "prepare": "husky install",
     "dev": "nodemon -e ts,json src/server.ts"
   },
   "keywords": [],
