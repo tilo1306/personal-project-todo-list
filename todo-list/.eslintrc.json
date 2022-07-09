@@ -15,6 +15,7 @@
     "semi": "off",
     "@typescript-eslint/semi": ["error"],
     "space-before-function-paren": "off",
-    "@typescript-eslint/space-before-function-paren": ["error"]
+    "@typescript-eslint/space-before-function-paren": ["error"],
+    "max-len": ["error", {"code": 80, "ignoreUrls": true}]
   }
 }

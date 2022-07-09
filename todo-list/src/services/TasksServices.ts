@@ -11,7 +11,8 @@ export const allTasks = async (id: string): Promise<itasks[] | Error> => {
     return new Error()
   }
 }
-export const createTask = async (id: string, task: string): Promise<itasks | Error> => {
+export const createTask = async (id: string,
+  task: string): Promise<itasks | Error> => {
   if (!task.trim() || task.length === 0) {
     return new Error('Campo Tarefa vazio')
   } else {
@@ -19,7 +20,8 @@ export const createTask = async (id: string, task: string): Promise<itasks | Err
   }
 }
 
-export const updateTask = async (id: string, task: string, status: string): Promise<itasks | Error> => {
+export const updateTask = async (id: string,
+  task: string, status: string): Promise<itasks | Error> => {
   if (task.length === 0 || !task.trim()) {
     return new Error('Campo vazio')
   } else {

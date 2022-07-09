@@ -13,7 +13,8 @@ interface Tlogin {
   itoken: string
 }
 
-export const createUser = async (email: string, password: string): Promise<Itypes | Error> => {
+export const createUser = async (email: string,
+  password: string): Promise<Itypes | Error> => {
   if (email.length === 0 || !email.trim()) {
     return new Error('Campo E-mail vazio')
   }
@@ -35,7 +36,8 @@ export const createUser = async (email: string, password: string): Promise<Itype
   return await prisma.users.create({ data: { email, password: passCripto } })
 }
 
-export const userLogin = async (email: string, password: string): Promise<Tlogin | Error> => {
+export const userLogin = async (email: string,
+  password: string): Promise<Tlogin | Error> => {
   if (email.length === 0 || !email.trim()) {
     return new Error('Campo e-mail vazio')
   }

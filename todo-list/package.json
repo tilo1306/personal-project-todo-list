@@ -16,7 +16,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "cd .. && husky install .husky",
-    "dev": "nodemon -e ts,json src/server.ts"
+    "dev": "nodemon -e ts,json src/server.ts",
+    "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint --cache --fix \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "keywords": [],
   "author": "",
