@@ -9,15 +9,14 @@ describe('Testing user service', () => {
   const password = '123456'
   const passCripto = md5(password)
 
-  const dropDatabase = async () => {
-    await prisma.users.deleteMany()
-  }
   beforeAll(async () => {
-    await dropDatabase()
+    await prisma.tasks.deleteMany({ where: {} })
+    await prisma.users.deleteMany({ where: {} })
   })
 
   afterAll(async () => {
-    await dropDatabase()
+    await prisma.tasks.deleteMany({ where: {} })
+    await prisma.users.deleteMany({ where: {} })
     await prisma.$disconnect()
   })
 
