@@ -1,11 +1,10 @@
 import JWT from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import md5 from 'md5'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../database/prisma'
 import { Itypes } from '../types/typeModel'
 
 dotenv.config()
-const prisma = new PrismaClient()
 
 interface Tlogin {
   id: number

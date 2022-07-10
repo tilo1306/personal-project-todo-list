@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test& jest --runInBand",
     "prepare": "cd .. && husky install .husky",
     "dev": "nodemon -e ts,json src/server.ts",
     "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",

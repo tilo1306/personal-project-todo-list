@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../database/prisma'
 import { itasks } from '../types/typeTask'
-
-const prisma = new PrismaClient()
 
 export const allTasks = async (id: string): Promise<itasks[] | Error> => {
   const tasks = await prisma.tasks.findMany({ where: { userid: Number(id) } })
