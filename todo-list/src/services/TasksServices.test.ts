@@ -102,23 +102,14 @@ describe('Testing task service', () => {
       const delTask = await TasksServices.del(
         task.id.toString())
       expect(delTask).not.toBeInstanceOf(Error)
+      expect(delTask).toBe([])
     }
   })
+
   it('Should test del task', async () => {
-    const task = await prisma.tasks.findFirst({
-      where: {
-        task: 'HTML'
-      }
-    })
-    if (task) {
-      const delTask = await TasksServices.del(
-        (task.id.toString() + '1'))
-      expect(delTask).toBeInstanceOf(Error)
-    }
-  })
-  it('Should test del task', async () => {
+    const id = '9999'
     const delTask = await TasksServices.del(
-      'blabla')
+      id)
     expect(delTask).toBeInstanceOf(Error)
   })
 })

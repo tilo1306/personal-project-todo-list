@@ -32,10 +32,13 @@ export const updateTask = async (id: string,
 }
 
 export const del = async (id: string): Promise<itasks[] | Error> => {
-  const delTask = await prisma.tasks.delete({
+  const task = await prisma.tasks.findUnique({
     where: { id: Number(id) }
   })
-  if (delTask) {
+  if (task) {
+    await prisma.tasks.delete({
+      where: { id: Number(id) }
+    })
     return []
   } else {
     return new Error('Task not found')
