@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "test": "NODE_ENV=test& jest --runInBand",
+    "test": "NODE_ENV=test& jest --runInBand --coverage",
     "prepare": "cd .. && husky install .husky",
     "dev": "nodemon -e ts,json src/server.ts",
     "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -28,6 +28,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.3",
+    "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.4",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "eslint": "^8.19.0",
@@ -44,6 +45,7 @@
     "jest": "^28.1.2",
     "lint-staged": "^13.0.3",
     "prisma": "^4.0.0",
+    "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4"

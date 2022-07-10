@@ -29,11 +29,11 @@ describe('Testing user service', () => {
     const newUser = await UsersServices.createUser('      ', password) as Itypes
     expect(newUser).toBeInstanceOf(Error)
   })
-  it('should test create a new user empty value email', async () => {
+  it('should test create a new user empty value password', async () => {
     const newUser = await UsersServices.createUser(email, '') as Itypes
     expect(newUser).toBeInstanceOf(Error)
   })
-  it('should test create a new user empty value email', async () => {
+  it('should test create a new user empty value password', async () => {
     const newUser = await UsersServices.createUser(email, '         ') as Itypes
     expect(newUser).toBeInstanceOf(Error)
   })
@@ -42,12 +42,43 @@ describe('Testing user service', () => {
     const newUser = await UsersServices.createUser(email, password) as Itypes
     expect(newUser).not.toBeInstanceOf(Error)
     expect(newUser).toHaveProperty('id')
+    expect(newUser).toHaveProperty('email')
+    expect(newUser).toHaveProperty('password')
     expect(newUser.email).toBe(email)
     expect(newUser.password).toBe(passCripto)
   })
   it('should not allow to create a user with existing email', async () => {
     const newUser = await UsersServices.createUser(email, password) as Itypes
     expect(newUser).toBeInstanceOf(Error)
+  })
+  it('should not login user email empty', async () => {
+    const userLogin = await UsersServices.userLogin('', password)
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+  it('should not login user email empty', async () => {
+    const userLogin = await UsersServices.userLogin('   ', password)
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+  it('should not login user email empty', async () => {
+    const userLogin = await UsersServices.userLogin(email, '')
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+  it('should not login user email empty', async () => {
+    const userLogin = await UsersServices.userLogin(email, '         ')
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+  it('should not login user passwoord error', async () => {
+    const userLogin = await UsersServices.userLogin(email, '123456789')
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+  it('should not login user email error', async () => {
+    const userLogin = await UsersServices.userLogin('email@email.com', password)
+    expect(userLogin).toBeInstanceOf(Error)
+  })
+
+  it('should  login user', async () => {
+    const userLogin = await UsersServices.userLogin(email, password)
+    expect(userLogin).not.toBeInstanceOf(Error)
   })
 }
 )
