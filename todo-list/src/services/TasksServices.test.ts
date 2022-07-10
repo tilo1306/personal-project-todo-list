@@ -116,4 +116,9 @@ describe('Testing task service', () => {
       expect(delTask).toBeInstanceOf(Error)
     }
   })
+  it('Should test del task', async () => {
+    const delTask = await TasksServices.del(
+      'blabla')
+    expect(delTask).toBeInstanceOf(Error)
+  })
 })
