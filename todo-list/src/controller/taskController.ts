@@ -4,6 +4,8 @@ import * as TasksServices from '../services/TasksServices'
 export const allTasks = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params
   const getAllTasks = await TasksServices.allTasks(id)
+  console.log(getAllTasks)
+
   getAllTasks instanceof Error
     ? res.status(404).json([])
     : res.status(200).json(getAllTasks)

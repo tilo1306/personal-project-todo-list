@@ -2,7 +2,7 @@ import { prisma } from '../database/prisma'
 import request from 'supertest'
 import app from '../app'
 
-describe('Testing Api route register', () => {
+describe('Testing loginController register', () => {
   const email = 'tiloWolf@gmail.com'
   const password = '123456'
   beforeAll(async () => {
@@ -10,57 +10,76 @@ describe('Testing Api route register', () => {
     await prisma.users.deleteMany({ where: {} })
   })
 
-  it('testing register router', async () => {
-    const res = await request(app).post('/register')
+  it('Should register a new user', (done) => {
+    void request(app)
+      .post('/register')
       .send(`email=${email}&password=${password}`)
-    expect(res.statusCode).toEqual(201)
-    expect(res.body).toHaveProperty('id')
-    expect(res.body).toHaveProperty('email')
-    expect(res.body).toHaveProperty('password')
+      .then(res => {
+        expect(res.statusCode).toEqual(201)
+        expect(res.body).toHaveProperty('id')
+        expect(res.body).toHaveProperty('email')
+        expect(res.body).toHaveProperty('password')
+        return done()
+      })
   })
-  it('testing the registration email already registered error', async () => {
-    const res = await request(app).post('/register')
+  it('Should registered error', (done) => {
+    void request(app).post('/register')
       .send(`email=${email}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('E-mail já cadastrado ')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('E-mail já cadastrado ')
+        return done()
+      })
   })
-  it('testing register user empty email field', async () => {
+  it('Should register user empty email field', (done) => {
     const emailEmpty = ''
-    const res = await request(app).post('/register')
+    void request(app).post('/register')
       .send(`email=${emailEmpty}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo E-mail vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo E-mail vazio')
+        return done()
+      })
   })
-  it('testing register user email field with lots of white space', async () => {
+  it('Should register user email field with lots of white space', (done) => {
     const emailEmpty = '            '
-    const res = await request(app).post('/register')
+    void request(app).post('/register')
       .send(`email=${emailEmpty}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo E-mail vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo E-mail vazio')
+        return done()
+      })
   })
-  it('testing register user empty password field', async () => {
+  it('Should register user empty password field', (done) => {
     const passwordEmpty = ''
-    const res = await request(app).post('/register')
+    void request(app).post('/register')
       .send(`email=${email}&password=${passwordEmpty}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo Password vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo Password vazio')
+        return done()
+      })
   })
-  it('testing register user password field with lots of white space',
-    async () => {
+  it('Should register user password field with lots of white space',
+    (done) => {
       const passwordEmpty = '            '
-      const res = await request(app).post('/register')
+      void request(app).post('/register')
         .send(`email=${email}&password=${passwordEmpty}`)
-      expect(res.statusCode).toEqual(400)
-      expect(res.body).toHaveProperty('error')
-      expect(res.body.error).toEqual('Campo Password vazio')
+        .then(res => {
+          expect(res.statusCode).toEqual(400)
+          expect(res.body).toHaveProperty('error')
+          expect(res.body.error).toEqual('Campo Password vazio')
+          return done()
+        })
     })
 })
 
-describe('Testing Api route login', () => {
+describe('Should loginController login', () => {
   const email = 'tiloWolf@gmail.com'
   const password = '123456'
 
@@ -70,52 +89,70 @@ describe('Testing Api route login', () => {
     await prisma.$disconnect()
   })
 
-  it('testing login user empty email field', async () => {
+  it('Should login user empty email field', (done) => {
     const emailEmpty = ''
-    const res = await request(app).post('/login')
+    void request(app).post('/login')
       .send(`email=${emailEmpty}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo e-mail vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo e-mail vazio')
+        return done()
+      })
   })
-  it('testing login user email field with lots of white space', async () => {
+  it('Should login user email field with lots of white space', (done) => {
     const emailEmpty = '            '
-    const res = await request(app).post('/login')
+    void request(app).post('/login')
       .send(`email=${emailEmpty}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo e-mail vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo e-mail vazio')
+        return done()
+      })
   })
-  it('testing login user empty email field', async () => {
+  it('Should login user empty email field', (done) => {
     const passwordEmpty = ''
-    const res = await request(app).post('/login')
+    void request(app).post('/login')
       .send(`email=${email}&password=${passwordEmpty}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo Password vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo Password vazio')
+        return done()
+      })
   })
-  it('testing login user password field with lots of white space', async () => {
+  it('Should login user password field with lots of white space', (done) => {
     const passwordEmpty = '            '
-    const res = await request(app).post('/login')
+    void request(app).post('/login')
       .send(`email=${email}&password=${passwordEmpty}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('Campo Password vazio')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('Campo Password vazio')
+        return done()
+      })
   })
-  it('testing login user email invalid', async () => {
+  it('Should login user email invalid', (done) => {
     const emailError = 'joselitoo@gmail.com'
-    const res = await request(app).post('/login')
+    void request(app).post('/login')
       .send(`email=${emailError}&password=${password}`)
-    expect(res.statusCode).toEqual(400)
-    expect(res.body).toHaveProperty('error')
-    expect(res.body.error).toEqual('E-mail nâo cadastrado')
+      .then(res => {
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('error')
+        expect(res.body.error).toEqual('E-mail nâo cadastrado')
+        return done()
+      })
   })
-  it('testing', async () => {
-    const res = await request(app).post('/login')
+  it('Should login correct', (done) => {
+    void request(app).post('/login')
       .send(`email=${email}&password=${password}`)
-    expect(res.statusCode).toEqual(200)
-    expect(res.body).toHaveProperty('id')
-    expect(res.body).toHaveProperty('email')
-    expect(res.body).toHaveProperty('itoken')
+      .then(res => {
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toHaveProperty('id')
+        expect(res.body).toHaveProperty('email')
+        expect(res.body).toHaveProperty('itoken')
+        return done()
+      })
   })
 })
