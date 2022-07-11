@@ -6,7 +6,7 @@ import { Itypes } from '../types/typeModel'
 describe('Testing Api route register', () => {
   const email = 'tiloWolf@gmail.com'
   const password = '123456'
-  beforeAll(async () => {
+  beforeEach(async () => {
     await prisma.tasks.deleteMany({ where: {} })
     await prisma.users.deleteMany({ where: {} })
     await prisma.users.create({
@@ -14,17 +14,39 @@ describe('Testing Api route register', () => {
         email, password
       }
     })
+
+    const user = await prisma.users.findFirst({
+      where: { email }
+    }) as Itypes
+    await prisma.tasks.createMany(
+      {
+        data: [
+          {
+            task: 'HTML',
+            userid: user.id
+          },
+          {
+            task: 'CSS',
+            userid: user.id
+          }
+        ]
+      }
+
+    )
   })
+
   afterAll(async () => {
     await prisma.tasks.deleteMany({ where: {} })
     await prisma.users.deleteMany({ where: {} })
     await prisma.$disconnect()
   })
-  it('testing register router', async () => {
+  it('testing error autheticaty', async () => {
     const user = await prisma.users.findFirst({
       where: { email }
     }) as Itypes
-    const res = await request(app).post(`/task/${user.id}`)
-    expect(res.statusCode).toEqual(200)
+
+    const res = await request(app).get(`/task/${user.id}`)
+    expect(res.statusCode).toEqual(403)
+    expect(res.body.error).toEqual('Não autorizado')
   })
 })
