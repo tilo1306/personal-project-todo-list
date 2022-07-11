@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "test": "NODE_ENV=test& jest --runInBand --coverage --forceExit",
+    "test": "NODE_ENV=test& jest npx prisma migrate deploy && jest -i--runInBand --coverage --forceExit",
     "prepare": "cd .. && husky install .husky",
     "dev": "nodemon -e ts,json src/server.ts",
     "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",
