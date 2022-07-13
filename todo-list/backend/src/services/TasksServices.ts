@@ -11,7 +11,7 @@ export const allTasks = async (id: string): Promise<itasks[] | Error> => {
 }
 export const createTask = async (id: string,
   task: string): Promise<itasks | Error> => {
-  if (!task.trim() || task.length === 0) {
+  if (task.length === 0 || !task.trim()) {
     return new Error('Campo Tarefa vazio')
   } else {
     return await prisma.tasks.create({ data: { task, userid: Number(id) } })
