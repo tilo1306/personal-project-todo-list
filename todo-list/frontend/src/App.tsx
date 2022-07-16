@@ -1,7 +1,13 @@
 import React from 'react';
+import GlobalStyles from './styles/GlobalStyles';
 
 const App: React.FunctionComponent = () => {
-  return <div>teste</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <div>teste</div>
+    </>
+  );
 };
 
 export default App;
