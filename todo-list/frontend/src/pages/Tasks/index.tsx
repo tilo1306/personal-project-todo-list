@@ -2,11 +2,11 @@ import React from 'react';
 import { Header } from '../../components/Header';
 import { Container } from './styles';
 
-export const SignUp: React.FC = () => {
+export const Tasks: React.FC = () => {
   return (
     <Container>
       <Header />
-      <p>SignUp</p>
+      <p>Tasks</p>
     </Container>
   );
 };

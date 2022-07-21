@@ -6,9 +6,11 @@ const Route = createNativeStackNavigator();
 
 export const AppRoutes: React.FunctionComponent = () => {
   return (
-    <Route.Navigator initialRouteName="SignUn">
-      <Route.Screen name="Signup" component={SignUp} />
-      <Route.Screen name="Signup" component={SignUp} />
+    <Route.Navigator
+      initialRouteName="SignUp"
+      screenOptions={{ headerShown: false }}
+    >
+      <Route.Screen name="SignUp" component={SignUp} />
     </Route.Navigator>
   );
 };
