@@ -25,8 +25,12 @@ export const SignIn: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (): Promise<any> => {
-    navigate('/login');
-    await api.register(email, password);
+    if (password.trim() !== '') {
+      navigate('/login');
+      await api.register(email, password);
+    } else {
+      alert('Campo Password vazio');
+    }
   };
 
   return (
