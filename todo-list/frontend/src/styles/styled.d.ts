@@ -11,6 +11,11 @@ declare module 'styled-components' {
 
       white: string;
       black: string;
+      input: string;
+    },
+    font: {
+      forum: string;
+      roboto: string;
     };
   }
 }

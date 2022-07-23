@@ -1,15 +1,22 @@
-import React from 'react';
-import { Container, Links } from './styles';
+import React, { Dispatch, SetStateAction } from 'react';
+import { Container, Links, Menu, Div } from './styles';
 
-export const MenuMobile: React.FC = () => {
-  const { pathname } = window.location;
+interface Props {
+  route: string;
+  setMenu: Dispatch<SetStateAction<boolean>>;
+}
 
+export const MenuMobile: React.FC<Props> = ({ route, setMenu }: Props) => {
   return (
     <Container>
+      <Div>
+        <Menu onClick={() => setMenu(false)} />
+      </Div>
       <a
         href="https://www.figma.com/file/savQbaci4mDQUGf3cEzmuh/New-TodoList?node-id=12%3A104"
         target="_blank"
         rel="noreferrer"
+        onClick={() => setMenu(false)}
       >
         Figma
       </a>
@@ -17,18 +24,26 @@ export const MenuMobile: React.FC = () => {
         href="https://www.linkedin.com/in/douglas-s-oliveira"
         target="_blank"
         rel="noreferrer"
+        onClick={() => setMenu(false)}
       >
         Linkedin
       </a>
-      <a href="https://github.com/tilo1306" target="_blank" rel="noreferrer">
+      <a
+        href="https://github.com/tilo1306"
+        target="_blank"
+        rel="noreferrer"
+        onClick={() => setMenu(false)}
+      >
         GitHub
       </a>
-      {pathname === '/login' ? (
+      {route === '/login' ? (
         <Links to={'/register'}>Registrar</Links>
-      ) : pathname === '/login' ? (
+      ) : route === '/register' ? (
         <Links to={'/login'}>Logar</Links>
       ) : (
-        <button>Logout</button>
+        <Links to={'/login'} onClick={() => console.log('Deslogou')}>
+          Sair
+        </Links>
       )}
     </Container>
   );

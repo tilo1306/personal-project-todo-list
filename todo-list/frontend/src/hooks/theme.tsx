@@ -23,6 +23,11 @@ interface Itheme {
 
     white: string;
     black: string;
+    input: string;
+  };
+  font: {
+    forum: string;
+    roboto: string;
   };
 }
 

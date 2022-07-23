@@ -1,8 +1,10 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Toggle } from '../Toggle';
-import { Container, Div, Links, Logo } from './styles';
+import { Container, Div, Logo, Links, Menu } from './styles';
 import { useTheme } from '../../hooks/theme';
+import { Link } from '../Link';
+import { MenuMobile } from '../MenuMobile';
 
 export const Header: React.FC = () => {
   const { pathname } = window.location;
@@ -10,6 +12,7 @@ export const Header: React.FC = () => {
   const { toggleTheme, theme } = useTheme();
 
   const [darkTheme, setDarkTheme] = useState(() => theme.title === ' dark');
+  const [menu, setMenu] = useState(false);
 
   const handleChangetheme = (): void => {
     setDarkTheme(!darkTheme);
@@ -20,9 +23,7 @@ export const Header: React.FC = () => {
     function reportWindowSize(): void {
       setWindowWidth(window.innerWidth);
     }
-    // Trigger this function on resize
     window.addEventListener('resize', reportWindowSize);
-    //  Cleanup for componentWillUnmount
     return () => window.removeEventListener('resize', reportWindowSize);
   }, []);
 
@@ -30,36 +31,12 @@ export const Header: React.FC = () => {
     <Container>
       <Div>
         <Logo />
-        <Toggle
-          labelLeft="Dark"
-          labelRight="Light"
-          checked={darkTheme}
-          onChange={handleChangetheme}
-        />
+        <Toggle checked={darkTheme} onChange={handleChangetheme} />
       </Div>
-      {windowWidth > 800 && (
-        <Div>
-          <a
-            href="https://www.figma.com/file/savQbaci4mDQUGf3cEzmuh/New-TodoList?node-id=12%3A104"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Figma
-          </a>
-          <a
-            href="https://www.linkedin.com/in/douglas-s-oliveira"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Linkedin
-          </a>
-          <a
-            href="https://github.com/tilo1306"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
+      {windowWidth > 700 && <Link />}
+
+      {windowWidth > 700 && (
+        <>
           {pathname === '/login' ? (
             <Links to={'/register'}>Registrar</Links>
           ) : pathname === '/register' ? (
@@ -69,9 +46,11 @@ export const Header: React.FC = () => {
               Sair
             </Links>
           )}
-        </Div>
+        </>
       )}
-      {windowWidth < 800 && <button>ts</button>}
+
+      {windowWidth < 700 && <Menu onClick={() => setMenu(!menu)} />}
+      {menu && <MenuMobile route={pathname} setMenu={setMenu} />}
     </Container>
   );
 };

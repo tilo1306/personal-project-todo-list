@@ -8,5 +8,10 @@ export default {
 
     white: '#000000',
     black: '#FFFFFF',
+    input: '#F6F7F8',
+  },
+  font: {
+    forum: 'Forum, cursive',
+    roboto: 'Roboto, sans-serif',
   },
 };
