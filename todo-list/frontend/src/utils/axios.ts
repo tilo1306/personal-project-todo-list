@@ -10,5 +10,12 @@ export const api = {
     const response = await request.post('/register', { email, password });
     return response.data;
   },
+  login: async (email: string, password: string) => {
+    const response = await request.post('/login', { email, password })
+    return response.data
+  },
+  tasks: async (id: string, token: string) => {
+    const response = await request.get(`/task/${id}`, { headers: { "Authorization": `Bearer ${token}` } })
+  }
 
 };

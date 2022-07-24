@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Input } from '../../components/Input';
 import { Header } from '../../components/Header';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import {
   Container,
@@ -22,12 +22,15 @@ import { api } from '../../utils/axios';
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (): Promise<any> => {
     if (password.trim() !== '') {
-      navigate('/login');
-      await api.register(email, password);
+      try {
+        await api.register(email, password);
+        return <Navigate to={'/login'} />;
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       alert('Campo Password vazio');
     }

@@ -42,7 +42,10 @@ export const Header: React.FC = () => {
           ) : pathname === '/register' ? (
             <Links to={'/login'}>Logar</Links>
           ) : (
-            <Links to={'/login'} onClick={() => console.log('Deslogou')}>
+            <Links
+              to={'/login'}
+              onClick={() => localStorage.removeItem('user')}
+            >
               Sair
             </Links>
           )}
