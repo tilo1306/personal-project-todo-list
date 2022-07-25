@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Input } from '../../components/Input';
 import { Header } from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../../utils/axios';
 
 import {
   Container,
@@ -15,7 +16,6 @@ import {
   Login,
 } from './styles';
 import { Button } from '../../components/Button';
-import { api } from '../../utils/axios';
 
 interface Api {
   id: number;

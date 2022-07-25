@@ -2,15 +2,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Navigate } from 'react-router-dom';
+import { Local } from '../types/local';
 
 interface Props {
   children: JSX.Element;
-}
-
-interface Local {
-  id: string;
-  email: string;
-  token: string;
 }
 
 export const RequireAuth = ({ children }: Props) => {
