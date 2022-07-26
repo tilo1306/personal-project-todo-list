@@ -53,3 +53,8 @@ export const Image = styled(Logo1)`
   margin-left: 10px;
   fill: ${({ theme }) => theme.color.white}
 `;
+export const AreaTasks = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

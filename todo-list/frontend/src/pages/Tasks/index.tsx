@@ -2,14 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Date } from '../../components/Date';
 import { Header } from '../../components/Header';
+import { ListTask } from '../../components/ListTask';
 import { Local } from '../../types/local';
 import { Task } from '../../types/task';
 import { api } from '../../utils/axios';
-import { Area, Container, Image, Section, Time, Title } from './styles';
+import {
+  Area,
+  Container,
+  Image,
+  Section,
+  Time,
+  Title,
+  AreaTasks,
+} from './styles';
 
 export const Tasks: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [task, setTask] = useState<Task[]>([]);
+  const [list, setList] = useState<Task[]>([]);
 
   const navigate = useNavigate();
 
@@ -17,7 +26,7 @@ export const Tasks: React.FC = () => {
 
   const loadApi = async (): Promise<void> => {
     const json = (await api.allTasks(user.id, user.itoken)) as Task[];
-    setTask(json);
+    setList(json);
   };
 
   useEffect(() => {
@@ -41,7 +50,19 @@ export const Tasks: React.FC = () => {
           <Title>TodoList</Title>
           <Image />
         </Section>
-        {/* <ul>{!loading && task.map((p) => <li key={p.id}>{p.task}</li>)}</ul> */}
+        {loading && <div>Loading..</div>}
+        {!loading && (
+          <AreaTasks>
+            {list.map((task) => (
+              <ListTask
+                key={task.id}
+                userId={user.id}
+                task={task}
+                token={user.itoken}
+              />
+            ))}
+          </AreaTasks>
+        )}
       </Area>
     </Container>
   );

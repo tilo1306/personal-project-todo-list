@@ -2,7 +2,10 @@ import { prisma } from '../database/prisma'
 import { itasks } from '../types/typeTask'
 
 export const allTasks = async (id: string): Promise<itasks[] | Error> => {
-  const tasks = await prisma.tasks.findMany({ where: { userid: Number(id) } })
+  const tasks = await prisma.tasks.findMany({
+    where: { userid: Number(id) },
+    orderBy: [{ id: 'asc' }]
+  })
   if (tasks.length >= 1) {
     return tasks
   } else {
