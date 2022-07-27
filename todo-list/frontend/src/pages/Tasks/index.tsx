@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Date } from '../../components/Date';
 import { Header } from '../../components/Header';
+import { Input } from '../../components/Input';
 import { ListTask } from '../../components/ListTask';
 import { Local } from '../../types/local';
 import { Task } from '../../types/task';
@@ -19,6 +21,7 @@ import {
 export const Tasks: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<Task[]>([]);
+  const [text, setText] = useState('');
 
   const navigate = useNavigate();
 
@@ -27,6 +30,15 @@ export const Tasks: React.FC = () => {
   const loadApi = async (): Promise<void> => {
     const json = (await api.allTasks(user.id, user.itoken)) as Task[];
     setList(json);
+  };
+  const handleChange = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ): Promise<void> => {
+    if (e.key === 'Enter') {
+      await api.create(user.id, text, user.itoken);
+      setText('');
+      void loadApi();
+    }
   };
 
   useEffect(() => {
@@ -50,6 +62,15 @@ export const Tasks: React.FC = () => {
           <Title>TodoList</Title>
           <Image />
         </Section>
+        <Input
+          className="add-task"
+          type="text"
+          maxLength={30}
+          placeholder="Digite uma Tarefa"
+          autoFocus
+          onKeyUp={handleChange}
+          onChange={({ target }) => setText(target.value)}
+        />
         {loading && <div>Loading..</div>}
         {!loading && (
           <AreaTasks>
@@ -59,6 +80,7 @@ export const Tasks: React.FC = () => {
                 userId={user.id}
                 task={task}
                 token={user.itoken}
+                load={loadApi}
               />
             ))}
           </AreaTasks>

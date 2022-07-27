@@ -5,15 +5,22 @@ import { ReactComponent as Logo1 } from '../../assets/logo.svg';
 export const Container = styled.section`
 width: 100%;
 background-color: ${({ theme }) => theme.color.primary};
-height: 100vh;
+min-height: 100vh;
+padding-bottom: 50px;
+.add-task{
+  display: flex;
+  max-width:500px;
+  margin: 0 auto;
+  
+}
 `;
 export const Area = styled.div`
 width: 700px;
 min-height: 480px;
 background-color: ${({ theme }) => theme.color.secondary};
 border-radius: 20px ;
-margin: 30px auto auto auto;
-padding: 20px;
+margin: 30px auto;
+padding:  20px 40px;
 
 @media (max-width: 800px) {
     width: 500px;
@@ -29,10 +36,8 @@ padding: 20px;
   }
 `
 export const Time = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-right: 27px;
+display: flex;
+justify-content: flex-end;
 `;
 export const Section = styled.section`
   display: flex;
@@ -57,4 +62,5 @@ export const AreaTasks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 `;

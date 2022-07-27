@@ -19,6 +19,13 @@ export const api = {
     return response.data
 
   },
+  create: async (userId: string, task: string, token: string) => {
+    const response = await request.post(`/task/${userId}`, {
+      task,
+    }, { headers: { "Authorization": `Bearer ${token}` } })
+    return response.data
+
+  },
   edit: async (id: string, userId: string, task: string, status: string, token: string) => {
     const response = await request.put(`/task/${userId}`, {
       id,
