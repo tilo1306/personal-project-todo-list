@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Date } from '../../components/Date';
@@ -29,6 +28,9 @@ export const Tasks: React.FC = () => {
 
   const loadApi = async (): Promise<void> => {
     const json = (await api.allTasks(user.id, user.itoken)) as Task[];
+    if (json.length < 1) {
+      setList([]);
+    }
     setList(json);
   };
   const handleChange = async (
@@ -66,6 +68,7 @@ export const Tasks: React.FC = () => {
           className="add-task"
           type="text"
           maxLength={30}
+          value={text}
           placeholder="Digite uma Tarefa"
           autoFocus
           onKeyUp={handleChange}

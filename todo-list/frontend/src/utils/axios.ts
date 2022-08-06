@@ -36,10 +36,12 @@ export const api = {
 
   },
   delete: async (id: string, userId: string, token: string) => {
-    const response = await request.put(`/task/${userId}`, {
-      id,
-    }, { headers: { "Authorization": `Bearer ${token}` } })
+    const response = await request.delete(`/task/${userId}`, {
+      headers: { "Authorization": `Bearer ${token}` },
+      data: {
+        id: id
+      }
+    });
     return response.data
-  },
-
+  }
 };

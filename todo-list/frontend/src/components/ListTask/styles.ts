@@ -44,9 +44,29 @@ position:relative;
     margin:0 20px;
   }
   select {
-    width: auto;
+    width: 120px;
     height: 30px;
+    border: 1px solid black;
+    border-radius: 3px;
   }
+  .button-edit{
+  background-color: green;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 5px;
+  margin: 0 auto;
+
+}
+.button-del{
+  background-color: red;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
   @media(max-width: 630px){
     display: flex;
     flex-direction: column;
@@ -69,13 +89,7 @@ export const Div = styled.div`
 
 `;
 
-export const ButtonEdit = styled.div`
-  background-color: green;
-  width: 60px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 5px;
-`;
+
 export const ButtonDel = styled.div`
   background-color: red;
   width: 60px;
