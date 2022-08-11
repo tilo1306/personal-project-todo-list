@@ -6,7 +6,7 @@ export const allTasks = async (req: Request, res: Response): Promise<void> => {
   const getAllTasks = await TasksServices.allTasks(id)
 
   getAllTasks instanceof Error
-    ? res.status(404).json([])
+    ? res.status(204).send()
     : res.status(200).json(getAllTasks)
 }
 
