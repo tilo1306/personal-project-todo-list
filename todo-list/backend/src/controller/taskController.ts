@@ -6,12 +6,14 @@ export const allTasks = async (req: Request, res: Response): Promise<void> => {
   const getAllTasks = await TasksServices.allTasks(id)
 
   getAllTasks instanceof Error
-    ? res.status(204).send()
+    ? res.status(204).json()
     : res.status(200).json(getAllTasks)
 }
 
-export const createTask = async (req: Request,
-  res: Response): Promise<void> => {
+export const createTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params
   const { task } = req.body
 
@@ -21,14 +23,15 @@ export const createTask = async (req: Request,
     ? res.status(400).json({ error: newTask.message })
     : res.status(200).json(newTask)
 }
-export const updateTask = async (req: Request,
-  res: Response): Promise<void> => {
+export const updateTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id, task, status } = req.body
 
   const taskUpdate = await TasksServices.updateTask(id, task, status)
   taskUpdate instanceof Error
-    ? res.status(400).json(
-      { error: taskUpdate.message })
+    ? res.status(400).json({ error: taskUpdate.message })
     : res.status(201).json(taskUpdate)
 }
 

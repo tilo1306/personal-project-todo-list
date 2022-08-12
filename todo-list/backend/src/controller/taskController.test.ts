@@ -76,8 +76,9 @@ describe('Should Api route register', () => {
       .get('/task/998')
       .set('Authorization', `Bearer ${token}`)
       .then(res => {
-        expect(res.statusCode).toEqual(204)
+        expect(res.statusCode).toEqual(404)
         expect(res.body.error).toBeUndefined()
+        expect(res.body).toEqual(expect.any(Array))
         return done()
       })
   })
