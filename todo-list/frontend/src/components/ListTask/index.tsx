@@ -40,11 +40,13 @@ export const ListTask = ({ task, userId, token, load }: Props): JSX.Element => {
   };
   const handleDel = async (): Promise<void> => {
     await api.delete(task.id, userId, token);
-    void load();
+    load();
   };
   return (
     <Container>
-      <span> {task.task}</span>
+      <span className={task.status === 'Finalizado' ? 'finishin' : ''}>
+        {task.task}
+      </span>
       {screen && (
         <EditWindowns>
           <Input
@@ -55,22 +57,28 @@ export const ListTask = ({ task, userId, token, load }: Props): JSX.Element => {
             onKeyUp={handleChange}
             value={text}
             onChange={({ target }) => setText(target.value)}
-            maxLength={25}
+            maxLength={20}
           />
         </EditWindowns>
       )}
       <Div>
-        <select onChange={selecthandle} defaultValue={task.status}>
+        <select
+          className="select-input"
+          onChange={selecthandle}
+          defaultValue={task.status}
+        >
           <option value="Aguardando">Aguardando</option>
           <option value="Progresso">Progresso</option>
           <option value="Finalizado">Finalizado</option>
         </select>
-        <Button className="button-edit" onClick={windows}>
-          Edit
-        </Button>
-        <Button className="button-del" onClick={handleDel}>
-          Del
-        </Button>
+        <div>
+          <Button className="button-edit" onClick={windows}>
+            Edit
+          </Button>
+          <Button className="button-del" onClick={handleDel}>
+            Del
+          </Button>
+        </div>
       </Div>
     </Container>
   );

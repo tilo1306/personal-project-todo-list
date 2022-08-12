@@ -1,8 +1,6 @@
 import React from 'react';
 import Switch from 'react-switch';
-import { Container } from './styles';
-import { ReactComponent as Moon } from '../../assets/moon.svg';
-import { ReactComponent as Sun } from '../../assets/sun.svg';
+import { Container, Lua, Sol } from './styles';
 
 interface ItogglesProps {
   checked: boolean;
@@ -12,7 +10,7 @@ interface ItogglesProps {
 export const Toggle: React.FC<ItogglesProps> = ({ checked, onChange }) => {
   return (
     <Container>
-      <Moon width={25} height={25} />
+      <Lua />
       <Switch
         className="switch"
         checked={checked}
@@ -20,7 +18,7 @@ export const Toggle: React.FC<ItogglesProps> = ({ checked, onChange }) => {
         checkedIcon={false}
         onChange={onChange}
       />
-      <Sun width={30} height={30} />
+      <Sol />
     </Container>
   );
 };

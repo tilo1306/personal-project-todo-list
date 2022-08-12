@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Date } from '../../components/Date';
@@ -27,11 +28,11 @@ export const Tasks: React.FC = () => {
   const user = JSON.parse(localStorage.getItem('user') as string) as Local;
 
   const loadApi = async (): Promise<void> => {
-    const json = (await api.allTasks(user.id, user.itoken)) as Task[];
-    if (json.length < 1) {
-      setList([]);
-    }
-    setList(json);
+    const json = (await api.allTasks(
+      user.id.toString(),
+      user.itoken
+    )) as Task[];
+    json ? setList(json) : setList([]);
   };
   const handleChange = async (
     e: React.KeyboardEvent<HTMLInputElement>
@@ -39,15 +40,21 @@ export const Tasks: React.FC = () => {
     if (e.key === 'Enter') {
       await api.create(user.id, text, user.itoken);
       setText('');
-      void loadApi();
+      await loadApi();
     }
   };
 
   useEffect(() => {
     if (user !== undefined) {
-      setLoading(true);
-      void loadApi();
-      setLoading(false);
+      try {
+        setLoading(true);
+        setTimeout(() => {
+          void loadApi();
+        }, 1000);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       navigate('/login');
     }
@@ -67,7 +74,7 @@ export const Tasks: React.FC = () => {
         <Input
           className="add-task"
           type="text"
-          maxLength={30}
+          maxLength={20}
           value={text}
           placeholder="Digite uma Tarefa"
           autoFocus

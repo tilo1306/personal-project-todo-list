@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Input } from '../../components/Input';
 import { Header } from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../utils/axios';
 
 import {
   Container,
@@ -14,27 +12,22 @@ import {
   Title,
   FormTitle,
   Login,
-} from './styles';
+} from '../SignIn/styles';
 import { Button } from '../../components/Button';
-
-interface Api {
-  id: number;
-  email: string;
-  token: string;
-}
+import { api } from '../../utils/axios';
 
 export const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
-  const handleSubmit = async (): Promise<any> => {
+  const handleSubmit = async (): Promise<void> => {
     if (password.trim() !== '') {
-      const login = (await api.login(email, password)) as Api;
-      if (login !== undefined) {
-        localStorage.setItem('user', JSON.stringify(login));
-        navigate(`/task/${login.id}`);
+      try {
+        await api.register(email, password);
+        navigate('/login');
+      } catch (error) {
+        console.error(error);
       }
     } else {
       alert('Campo Password vazio');
@@ -50,12 +43,11 @@ export const SignUp: React.FC = () => {
           <Logo />
         </DivLogo>
         <Form
-          onSubmit={(e) => {
-            e.preventDefault();
+          onSubmit={() => {
             void handleSubmit();
           }}
         >
-          <FormTitle>Entrar</FormTitle>
+          <FormTitle>Cadastrar</FormTitle>
           <Input
             className="email"
             type="email"
@@ -70,8 +62,8 @@ export const SignUp: React.FC = () => {
             placeholder="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
-          <Button type="submit">Acessar</Button>
-          <Login to={'/register'}>Criar uma conta</Login>
+          <Button type="submit">Cadastrar</Button>
+          <Login to={'/login'}>Já tenho uma conta</Login>
         </Form>
       </Section>
     </Container>
