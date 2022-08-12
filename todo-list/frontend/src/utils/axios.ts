@@ -39,7 +39,7 @@ export const api = {
     const response = await request.delete(`/task/${userId}`, {
       headers: { "Authorization": `Bearer ${token}` },
       data: {
-        id: id
+        id
       }
     });
     return response.data

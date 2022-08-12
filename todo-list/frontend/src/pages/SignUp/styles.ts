@@ -12,14 +12,14 @@ export const Container = styled.section`
     background-repeat: no-repeat;
     background-position: left;
     background-size: 1.3em;
-    background-position: 20px;
+    background-position: 10px;
   }
   .password {
     background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064155.png');
     background-repeat: no-repeat;
     background-position: left;
     background-size: 1.3em;
-    background-position: 20px;
+    background-position: 10px;
   }
 `;
 export const Section = styled.section`
