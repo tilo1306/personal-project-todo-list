@@ -15,6 +15,8 @@
   },
   "scripts": {
     "test": "NODE_ENV=test& jest --runInBand --coverage --forceExit --detectOpenHandles",
+    "start": "nodemon",
+    "build": "rimraf dist && tsc",
     "prepare": "cd .. && husky install .husky",
     "dev": "nodemon -e ts,json src/server.ts",
     "lint": "eslint --cache \"src/**/*.{js,jsx,ts,tsx}\"",
