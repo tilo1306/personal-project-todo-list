@@ -1,6 +1,11 @@
 import React from 'react';
-import { AppRoutes } from './App.routes';
+import { NavigationContainer } from '@react-navigation/native';
+import { StackRoutes } from './Stack.routes';
 
-export const Routes: React.FunctionComponent = () => {
-  return <AppRoutes />;
-};
+export function Routes() {
+  return (
+    <NavigationContainer>
+      <StackRoutes />
+    </NavigationContainer>
+  );
+}

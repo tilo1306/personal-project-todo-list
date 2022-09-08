@@ -1,17 +1,22 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { ThemeProvider } from 'styled-components';
-import { Routes } from './src/routes';
-import dark from './src/styles/themes/dark';
 import 'react-native-gesture-handler';
-const App: React.FunctionComponent = () => {
-  return (
-    <NavigationContainer>
-      <ThemeProvider theme={dark}>
-        <Routes />
-      </ThemeProvider>
-    </NavigationContainer>
-  );
-};
+import { Routes } from './src/routes';
+import { ThemeProvider } from './src/hooks/theme';
+import { useFonts, Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { Forum_400Regular } from '@expo-google-fonts/forum';
+import { ActivityIndicator } from 'react-native';
 
-export default App;
+export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Forum_400Regular,
+  });
+  if (!fontsLoaded) {
+    return <ActivityIndicator color={'#fff'} />;
+  }
+  return (
+    <ThemeProvider>
+      <Routes />
+    </ThemeProvider>
+  );
+}
