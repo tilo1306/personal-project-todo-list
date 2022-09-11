@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Linking } from 'react-native';
 import {
   AreaLink,
@@ -10,6 +10,9 @@ import {
   LogoFigma,
   LogoLinkedin,
   LogoGitHub,
+  ContainerSwitch,
+  Moon,
+  Sun,
 } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../hooks/theme';
@@ -18,11 +21,8 @@ export const SignInDrawerCustom = () => {
   const { toggleTheme, theme } = useTheme();
   const navigation = useNavigation();
 
-  const [darkTheme, setDarkTheme] = useState(theme.title === 'dark');
-
   const handleChange = () => {
     toggleTheme();
-    setDarkTheme(!darkTheme);
   };
 
   return (
@@ -69,7 +69,11 @@ export const SignInDrawerCustom = () => {
           </Link>
         </AreaLink>
       </ContainerLinks>
-      <Switch value={darkTheme} onChange={handleChange} />
+      <ContainerSwitch>
+        <Moon />
+        <Switch value={theme.title === 'light'} onChange={handleChange} />
+        <Sun />
+      </ContainerSwitch>
     </ContainerDrawer>
   );
 };

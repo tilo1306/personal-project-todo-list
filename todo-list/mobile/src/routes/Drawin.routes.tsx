@@ -11,7 +11,10 @@ const { Screen, Navigator } = createDrawerNavigator();
 
 export function DrawerSignIn() {
   return (
-    <Navigator drawerContent={SignInDrawerCustom}>
+    <Navigator
+      screenOptions={{ headerShown: false }}
+      drawerContent={SignInDrawerCustom}
+    >
       <Screen name="SignIn" component={SignIn} />
     </Navigator>
   );
@@ -19,14 +22,20 @@ export function DrawerSignIn() {
 
 export function DrawerSignUp() {
   return (
-    <Navigator drawerContent={SignUpDrawerCustom}>
+    <Navigator
+      screenOptions={{ headerShown: false }}
+      drawerContent={SignUpDrawerCustom}
+    >
       <Screen name="SignUp" component={SignUp} />
     </Navigator>
   );
 }
 export function DrawerTasks() {
   return (
-    <Navigator drawerContent={TasksDrawerCustom}>
+    <Navigator
+      screenOptions={{ headerShown: false }}
+      drawerContent={TasksDrawerCustom}
+    >
       <Screen name="Tasks" component={Tasks} />
     </Navigator>
   );

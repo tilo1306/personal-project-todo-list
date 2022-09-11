@@ -13,5 +13,6 @@ export default {
   font: {
     forum: 'Forum_400Regular',
     roboto: 'Roboto_400Regular',
+    economica: 'Economica_400Regular',
   },
 };
