@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input } from '../../components/Inputs';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -19,10 +20,38 @@ import {
   KeyboardArea,
   NewAccount,
 } from './styled';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
+import { api } from '../../utils/axios';
+
+interface Api {
+  id: number;
+  email: string;
+  token: string;
+}
 
 export const SignIn: React.FC = () => {
+  const [email, setEmail] = useState('');
+
+  const [password, setPassword] = useState('');
+
   const navigation = useNavigation();
+
+  const handleSubmit = async (): Promise<any> => {
+    if (password.trim() !== '' || email.trim() !== '') {
+      const login = (await api.login(email, password)) as Api;
+      if (login !== undefined) {
+        console.log(login);
+
+        await AsyncStorage.setItem('user', JSON.stringify(login));
+        navigation.navigate('DrawerTasks' as never);
+      } else {
+        Alert.alert('Email ou Password invalido');
+      }
+    } else {
+      Alert.alert('Campo Email ou Password vazio');
+    }
+  };
+
   return (
     <Container>
       <AreaTitle>
@@ -42,13 +71,21 @@ export const SignIn: React.FC = () => {
               autoCorrect={false}
               placeholder="Email"
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
           </ViewInput>
           <ViewInput>
             <ImgPassword />
-            <Input placeholder="Senha" autoCorrect={false} secureTextEntry />
+            <Input
+              placeholder="Senha"
+              autoCorrect={false}
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
           </ViewInput>
-          <Button>
+          <Button onPress={handleSubmit}>
             <TextButton>Acessar</TextButton>
           </Button>
           <TextAcess
