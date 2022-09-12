@@ -7,7 +7,6 @@ export const Container = styled.div`
   width: 100%;
   height: 37px;
   border-radius: 5px;
-  background-color: red;
   line-height: 37px;
   margin-top: 10px;
   background-color: #f6f7f8;
