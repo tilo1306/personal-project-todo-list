@@ -13,6 +13,7 @@
     "@expo-google-fonts/forum": "^0.2.2",
     "@expo-google-fonts/roboto": "^0.2.2",
     "@react-native-async-storage/async-storage": "~1.17.3",
+    "@react-native-picker/picker": "2.4.2",
     "@react-navigation/drawer": "^6.4.4",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",

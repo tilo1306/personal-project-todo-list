@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Selected } from '../../components/Selected/Index';
 import {
   Container,
   AreaTask,
@@ -7,6 +7,8 @@ import {
   Title,
   Logo,
   InputAdd,
+  ViewTask,
+  TextTask,
 } from './styled';
 export const Tasks: React.FC = () => {
   return (
@@ -16,8 +18,11 @@ export const Tasks: React.FC = () => {
           <Title>Todo List</Title>
           <Logo />
         </AreaTitle>
-        <InputAdd />
-        <Text>Todo-List</Text>
+        <InputAdd maxLength={15} />
+        <ViewTask>
+          <TextTask task="HTML" />
+          <Selected status={'Andamento'} />
+        </ViewTask>
       </AreaTask>
     </Container>
   );
