@@ -79,7 +79,7 @@ export const SignUp: React.FC = () => {
             <TextButton>Cadastrar</TextButton>
           </Button>
           <TextAcess
-            onPress={() => navigation.navigate('DrawerSignUp' as never)}
+            onPress={() => navigation.navigate('DrawerSignIn' as never)}
           >
             <NewAccount>Já tenho uma conta</NewAccount>
           </TextAcess>

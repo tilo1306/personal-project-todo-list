@@ -40,8 +40,6 @@ export const SignIn: React.FC = () => {
     if (password.trim() !== '' || email.trim() !== '') {
       const login = (await api.login(email, password)) as Api;
       if (login !== undefined) {
-        console.log(login);
-
         await AsyncStorage.setItem('user', JSON.stringify(login));
         navigation.navigate('DrawerTasks' as never);
       } else {
