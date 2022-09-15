@@ -32,6 +32,9 @@ export const SignUp: React.FC = () => {
   const handleSubmit = async (): Promise<void> => {
     if (password.trim() !== '' || email.trim() !== '') {
       try {
+        console.log(email);
+        console.log(password);
+
         await api.register(email, password);
         navigation.navigate('DrawerSignIn' as never);
       } catch (error: any) {

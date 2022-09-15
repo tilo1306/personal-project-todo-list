@@ -22,25 +22,23 @@ import {
 } from './styled';
 import { Alert, Platform } from 'react-native';
 import { api } from '../../utils/axios';
-
-interface Api {
-  id: number;
-  email: string;
-  token: string;
-}
+import { useAuth } from '../../context/AuthContext';
 
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
-
   const [password, setPassword] = useState('');
+
+  const { signIn } = useAuth();
 
   const navigation = useNavigation();
 
   const handleSubmit = async (): Promise<any> => {
     if (password.trim() !== '' || email.trim() !== '') {
-      const login = (await api.login(email, password)) as Api;
+      const login = await api.login(email, password);
+
       if (login !== undefined) {
-        await AsyncStorage.setItem('user', JSON.stringify(login));
+        await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(login));
+        signIn();
         navigation.navigate('DrawerTasks' as never);
       } else {
         Alert.alert('Email ou Password invalido');

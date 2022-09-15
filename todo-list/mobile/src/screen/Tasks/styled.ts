@@ -44,6 +44,7 @@ export const InputAdd = styled(Input)`
   margin-bottom: ${RFValue(26)}px;
   height: ${RFValue(30)}px;
   width: 100%;
+  padding: 0 ${RFValue(10)}px;
 `;
 
 export const ViewTask = styled.View`
@@ -54,9 +55,9 @@ export const ViewTask = styled.View`
   justify-content: space-between;
   background-color: #f6f7f8;
   border-radius: 5px;
+  margin-bottom: 20px;
 `;
 export const TextTask = styled(Task)`
-  width: 80%;
-  margin-left: 10px;
+  margin-left: 0 10px;
   background-color: red;
 `;

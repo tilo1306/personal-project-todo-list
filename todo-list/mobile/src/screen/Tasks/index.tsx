@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { useNavigation, Text } from '@react-navigation/native';
-import { Selected } from '../../components/Selected/Index';
+import React, { useEffect, useState } from 'react';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import {
   Container,
   AreaTask,
@@ -9,55 +8,45 @@ import {
   Title,
   Logo,
   InputAdd,
-  ViewTask,
-  TextTask,
 } from './styled';
 import { Task } from '../../@types/Task';
+import { ListItemSwipe } from '../../components/ListItemSwipe';
+import { ListTasks } from '../../components/ListTasks';
 import { api } from '../../utils/axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Local } from '../../@types/Local';
+import { useAuth } from '../../context/AuthContext';
 
-type dataUser = {
-  id: string;
-  itoken: string;
-};
-
-export const Tasks = () => {
-  const [loading, setLoading] = useState(false);
+export const Tasks: React.FC = () => {
   const [list, setList] = useState<Task[]>([]);
   const [item, setItem] = useState('');
-  const [user, setUser] = useState<dataUser>(Object);
 
-  const navigation = useNavigation();
+  const { user } = useAuth();
 
-  const handleSubmit = async () => {
-    setItem('');
+  const handleSubmit = () => {
+    //   const addItem = [...list];
+    //   addItem.push({
+    //     id: Number(addItem.length + 1).toString(),
+    //     task: item,
+    //     status: 'Aguardando',
+    //   });
+    //   setList(addItem);
+    //   setItem('');
+  };
+  const loadApi = async () => {
+    const getAll = await api.allTasks(
+      user?.id as string,
+      user?.itoken as string,
+    );
+    setList(getAll);
   };
 
-  const loadApi = async (): Promise<void> => {
-    const savedProfile = await AsyncStorage.getItem('user');
-
-    const profile = JSON.parse(savedProfile);
-
-    setUser({ id: profile.id, itoken: profile.itoken });
-    const json = await api.allTasks('18', profile.itoken);
-    json ? setList(json) : setList([]);
-    console.log('====================================');
-    console.log(list);
-    console.log('====================================');
+  const deleteItem = (index: number) => {
+    let newItems = [...list];
+    newItems = newItems.filter((it, i) => i != index);
+    setList(newItems);
   };
-
   useEffect(() => {
-    try {
-      setLoading(true);
-      setTimeout(() => {
-        void loadApi();
-      }, 1000);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    loadApi();
+  });
 
   return (
     <Container>
@@ -67,7 +56,7 @@ export const Tasks = () => {
           <Logo />
         </AreaTitle>
         <InputAdd
-          maxLength={15}
+          maxLength={13}
           placeholder="Digite um novo item"
           value={item}
           onChangeText={e => setItem(e)}
@@ -75,14 +64,16 @@ export const Tasks = () => {
           returnKeyType="send"
         />
 
-        {!loading &&
-          list.map(p => {
-            // <ViewTask key={p.id}>
-            //   <TextTask task={p.task} />
-            //   <Selected status={p.status} />
-            // </ViewTask>;
-            <Text key={p.id}>{p.task}</Text>;
-          })}
+        <SwipeListView
+          data={list}
+          renderItem={({ item }) => <ListTasks task={item} />}
+          renderHiddenItem={({ index }) => (
+            <ListItemSwipe onDelete={() => deleteItem(index)} />
+          )}
+          leftOpenValue={50}
+          disableLeftSwipe={true}
+          keyExtractor={item => item.id}
+        />
       </AreaTask>
     </Container>
   );

@@ -5,5 +5,4 @@ import styled from 'styled-components/native';
 export const Container = styled(TextInput)`
   background-color: transparent;
   border-radius: ${RFValue(5)}px;
-  width: ${RFValue(130)}px;
 `;

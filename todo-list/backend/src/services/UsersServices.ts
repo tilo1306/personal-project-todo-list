@@ -30,7 +30,7 @@ export const createUser = async (email: string,
     return new Error('E-mail já cadastrado ')
   }
 
-  const passCripto = md5(password)
+  const passCripto = md5(password.toString())
 
   return await prisma.users.create({ data: { email, password: passCripto } })
 }
@@ -43,7 +43,7 @@ export const userLogin = async (email: string,
   if (password.length === 0 || !password.trim()) {
     return new Error('Campo Password vazio')
   }
-  const passCripto = md5(password)
+  const passCripto = md5(password.toString())
 
   const login = await prisma.users.findFirst({
     where: {

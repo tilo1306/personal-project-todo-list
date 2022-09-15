@@ -8,7 +8,6 @@ interface Props {
 
 export const Selected = ({ status }: Props) => {
   const [selectedStatus, setSelectedStatus] = useState(status);
-  console.log(selectedStatus);
 
   return (
     <Container>
@@ -16,9 +15,21 @@ export const Selected = ({ status }: Props) => {
         selectedValue={selectedStatus}
         onValueChange={itemValue => setSelectedStatus(itemValue as string)}
       >
-        <Picker.Item label="Aguardando" value="Aguardando" />
-        <Picker.Item label="Andamento" value="Andamento" />
-        <Picker.Item label="Completo" value="Completo" />
+        <Picker.Item
+          style={{ fontSize: 13 }}
+          label="Aguardando"
+          value="Aguardando"
+        />
+        <Picker.Item
+          style={{ fontSize: 13 }}
+          label="Andamento"
+          value="Andamento"
+        />
+        <Picker.Item
+          style={{ fontSize: 13 }}
+          label="Completo"
+          value="Completo"
+        />
       </Select>
     </Container>
   );
