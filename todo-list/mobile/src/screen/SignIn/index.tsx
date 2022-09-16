@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Input } from '../../components/Inputs';
+import { Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../context/AuthContext';
+import { Input } from '../../components/Inputs';
 import {
   AreaInput,
   AreaTitle,
@@ -20,29 +21,18 @@ import {
   KeyboardArea,
   NewAccount,
 } from './styled';
-import { Alert, Platform } from 'react-native';
-import { api } from '../../utils/axios';
-import { useAuth } from '../../context/AuthContext';
 
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
 
-  const { signIn } = useAuth();
-
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   const handleSubmit = async (): Promise<any> => {
     if (password.trim() !== '' || email.trim() !== '') {
-      const login = await api.login(email, password);
-
-      if (login !== undefined) {
-        await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(login));
-        signIn();
-        navigation.navigate('DrawerTasks' as never);
-      } else {
-        Alert.alert('Email ou Password invalido');
-      }
+      signIn(email, password);
     } else {
       Alert.alert('Campo Email ou Password vazio');
     }

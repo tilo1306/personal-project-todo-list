@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, Alert } from 'react-native';
 import {
   AreaLink,
   ContainerDrawer,
@@ -14,15 +14,27 @@ import {
   Moon,
   Sun,
 } from './styled';
-import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../hooks/theme';
+import { useAuth } from '../../context/AuthContext';
 
 export const TasksDrawerCustom = () => {
   const { toggleTheme, theme } = useTheme();
-  const navigation = useNavigation();
+  const { signOut } = useAuth();
 
   const handleChange = () => {
     toggleTheme();
+  };
+  const handleSignOut = () => {
+    Alert.alert('Tem certeza?', 'Deseja realmente sair da aplicação?', [
+      {
+        text: 'Cancelar',
+        onPress: () => {},
+      },
+      {
+        text: 'Sair',
+        onPress: () => signOut(),
+      },
+    ]);
   };
 
   return (
@@ -64,9 +76,7 @@ export const TasksDrawerCustom = () => {
           </Link>
         </AreaLink>
         <AreaLink>
-          <Link onPress={() => navigation.navigate('DrawerSignIn' as never)}>
-            Sair
-          </Link>
+          <Link onPress={handleSignOut}>Sair</Link>
         </AreaLink>
       </ContainerLinks>
       <ContainerSwitch>

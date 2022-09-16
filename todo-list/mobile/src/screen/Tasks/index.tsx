@@ -1,6 +1,12 @@
+/* eslint-disable react-native/no-raw-text */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { useAuth } from '../../context/AuthContext';
+import { api } from '../../utils/axios';
+import { Task } from '../../@types/Task';
+import { ListItemSwipe } from '../../components/ListItemSwipe';
+import { ListTasks } from '../../components/ListTasks';
 import {
   Container,
   AreaTask,
@@ -9,11 +15,6 @@ import {
   Logo,
   InputAdd,
 } from './styled';
-import { Task } from '../../@types/Task';
-import { ListItemSwipe } from '../../components/ListItemSwipe';
-import { ListTasks } from '../../components/ListTasks';
-import { api } from '../../utils/axios';
-import { useAuth } from '../../context/AuthContext';
 
 export const Tasks: React.FC = () => {
   const [list, setList] = useState<Task[]>([]);
@@ -21,32 +22,37 @@ export const Tasks: React.FC = () => {
 
   const { user } = useAuth();
 
-  const handleSubmit = () => {
-    //   const addItem = [...list];
-    //   addItem.push({
-    //     id: Number(addItem.length + 1).toString(),
-    //     task: item,
-    //     status: 'Aguardando',
-    //   });
-    //   setList(addItem);
-    //   setItem('');
-  };
   const loadApi = async () => {
-    const getAll = await api.allTasks(
-      user?.id as string,
-      user?.itoken as string,
-    );
-    setList(getAll);
+    try {
+      const listTasks = await api.allTasks(
+        user?.id.toString() as string,
+        user?.itoken as string,
+      );
+      setList(listTasks);
+    } catch (error) {
+      setList([]);
+      console.log(error);
+    }
   };
 
-  const deleteItem = (index: number) => {
-    let newItems = [...list];
-    newItems = newItems.filter((it, i) => i != index);
-    setList(newItems);
+  const handleSubmit = async () => {
+    api.create(user?.id.toString() as string, item, user?.itoken as string);
+    setItem('');
+    loadApi();
   };
+
+  const deleteItem = async (item: string) => {
+    await api.delete(
+      item,
+      user?.id.toString() as string,
+      user?.itoken as string,
+    );
+    loadApi();
+  };
+
   useEffect(() => {
     loadApi();
-  });
+  }, [list]);
 
   return (
     <Container>
@@ -57,18 +63,17 @@ export const Tasks: React.FC = () => {
         </AreaTitle>
         <InputAdd
           maxLength={13}
-          placeholder="Digite um novo item"
+          placeholder="Digite uma nova tarefa"
           value={item}
           onChangeText={e => setItem(e)}
           onSubmitEditing={handleSubmit}
           returnKeyType="send"
         />
-
         <SwipeListView
           data={list}
           renderItem={({ item }) => <ListTasks task={item} />}
-          renderHiddenItem={({ index }) => (
-            <ListItemSwipe onDelete={() => deleteItem(index)} />
+          renderHiddenItem={({ item }) => (
+            <ListItemSwipe onDelete={() => deleteItem(item.id)} />
           )}
           leftOpenValue={50}
           disableLeftSwipe={true}

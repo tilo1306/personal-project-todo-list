@@ -1,4 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api, request } from '../utils/axios';
 
@@ -7,71 +9,65 @@ interface Props {
 }
 
 interface User {
-  id?: string;
+  id: string;
   email: string;
-  password: string;
-  itoken?: string;
+  itoken: string;
 }
 
 interface AuthContextData {
   signed: boolean;
   user: User | null;
   loading: boolean;
-  signIn(): Promise<void>;
+  signIn(email: string, password: string): Promise<void>;
   signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<User | null>({} as User);
+  const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function loadStorageData() {
       const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
-      const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
 
-      if (storagedUser && storagedToken) {
+      if (storagedUser) {
         setUser(JSON.parse(storagedUser));
         request.defaults.headers.common[
           'Authorization'
-        ] = `Bearer ${storagedToken}`;
+        ] = `Bearer ${user?.itoken}`;
       }
-
       setLoading(false);
     }
 
     loadStorageData();
   });
 
-  async function signIn() {
-    const response = await api.login(
-      user?.email as string,
-      user?.password as string,
-    );
-    console.log(response);
+  async function signIn(email: string, password: string) {
+    try {
+      const response = await api.login(email, password);
+      setUser(response);
 
-    setUser(response.user);
-
-    request.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${response.token}`;
-
-    await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
-    await AsyncStorage.setItem('@RNAuth:token', response.token);
+      request.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${response.itoken}`;
+      await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response));
+      navigation.navigate('DrawerTasks' as never);
+    } catch (error: any) {
+      Alert.alert(error.response.data.error);
+    }
   }
 
   async function signOut() {
     await AsyncStorage.removeItem('@RNAuth:user');
-    await AsyncStorage.removeItem('@RNAuth:token');
-
-    setUser(null);
+    setUser({} as User);
   }
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signIn, signOut }}
+      value={{ signed: !!user.id, user, loading, signIn, signOut }}
     >
       {children}
     </AuthContext.Provider>

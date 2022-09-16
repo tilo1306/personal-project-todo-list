@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Input } from '../../components/Inputs';
+import { Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../context/AuthContext';
+import { api } from '../../utils/axios';
+import { Input } from '../../components/Inputs';
 import {
   AreaInput,
   AreaTitle,
@@ -19,8 +22,6 @@ import {
   KeyboardArea,
   NewAccount,
 } from './styled';
-import { Alert, Platform } from 'react-native';
-import { api } from '../../utils/axios';
 
 export const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -29,13 +30,13 @@ export const SignUp: React.FC = () => {
 
   const navigation = useNavigation();
 
+  const { signOut } = useAuth();
+
   const handleSubmit = async (): Promise<void> => {
     if (password.trim() !== '' || email.trim() !== '') {
       try {
-        console.log(email);
-        console.log(password);
-
         await api.register(email, password);
+        signOut();
         navigation.navigate('DrawerSignIn' as never);
       } catch (error: any) {
         Alert.alert(error.response.data.error);

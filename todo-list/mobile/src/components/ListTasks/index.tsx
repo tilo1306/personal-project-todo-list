@@ -10,8 +10,8 @@ interface Props {
 export const ListTasks = ({ task }: Props) => {
   return (
     <ViewTask key={task.id}>
-      <TextTask task={task.task} />
-      <Selected status={task.status} />
+      <TextTask task={task} />
+      <Selected task={task} />
     </ViewTask>
   );
 };

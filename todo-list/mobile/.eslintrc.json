@@ -3,6 +3,9 @@
     "es2021": true
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     }
@@ -12,7 +15,8 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react-native/all"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -22,7 +26,13 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "react",
+    "react-native"
+  ],
   "rules": {
     "react/prop-types": "off",
     "react-in-jsx-scope": "off",

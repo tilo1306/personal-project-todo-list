@@ -11,6 +11,4 @@ export const ViewTask = styled.View`
   border-radius: ${RFValue(5)}px;
   margin-bottom: 20px;
 `;
-export const TextTask = styled(Task)`
-  margin-left: 0 10px;
-`;
+export const TextTask = styled(Task)``;

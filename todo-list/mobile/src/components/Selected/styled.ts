@@ -8,10 +8,9 @@ export const Container = styled.View`
   border-radius: ${RFValue(8)}px;
   justify-content: center;
   background-color: #f5f5f5;
-  margin-right: 5px;
+  margin-right: ${RFValue(5)}px; ;
 `;
 export const Select = styled(Picker)`
-  width: ${RFValue(130)}px;
+  width: ${RFValue(139)}px;
   font-family: ${({ theme }) => theme.font.roboto};
-  font-size: 50px;
 `;

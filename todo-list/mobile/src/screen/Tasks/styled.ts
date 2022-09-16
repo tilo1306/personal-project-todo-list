@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Logo1 from '../../assets/logo.svg';
 import { Input } from '../../components/Inputs';
-import { Task } from '../../components/Task';
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.color.primary};
@@ -41,23 +40,8 @@ export const InputAdd = styled(Input)`
   background-color: #f6f7f8;
   border-radius: ${RFValue(5)}px;
   margin-top: ${RFValue(50)}px;
-  margin-bottom: ${RFValue(26)}px;
   height: ${RFValue(30)}px;
   width: 100%;
   padding: 0 ${RFValue(10)}px;
-`;
-
-export const ViewTask = styled.View`
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  height: ${RFValue(30)}px;
-  justify-content: space-between;
-  background-color: #f6f7f8;
-  border-radius: 5px;
   margin-bottom: 20px;
-`;
-export const TextTask = styled(Task)`
-  margin-left: 0 10px;
-  background-color: red;
 `;
