@@ -2,11 +2,11 @@
 import axios from 'axios';
 
 export const request = axios.create({
-  baseURL: 'http://todolist1306.herokuapp.com/',
+  baseURL: 'http://192.168.1.115:3001/',
 });
 
 const BASE_URL = axios.create({
-  baseURL: 'http://todolist1306.herokuapp.com/',
+  baseURL: 'http://192.168.1.115:3001/',
 });
 
 export const api = {
