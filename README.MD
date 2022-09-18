@@ -3,7 +3,7 @@ Repositório com um projeto pessoal FullStack Todo-List.
 </h1>
 
 <h2 align="center">Back-End</h2>
-  <img align="center" alt="Test-Back-end" src="./img/test.jpeg">
+  <img align="center" alt="Test-Back-end" src="./todo-list/img/test.jpeg">
 
 ## :rocket: Tecnologias
 
@@ -39,7 +39,7 @@ Repositório com um projeto pessoal FullStack Todo-List.
 </div>
 <div>
   <h3 align="center">Front-End</h3>
-  <img align="center" alt="Front-End" src="./img/frontend.gif">
+  <img align="center" alt="Front-End" src="./todo-list/img/frontend.gif">
 
 ## :rocket: Tecnologias
 
@@ -67,7 +67,7 @@ Repositório com um projeto pessoal FullStack Todo-List.
 </div>
 <div>
   <h3 align="center">Mobile</h3>
-  <img align="center" alt="mobile" src="./img/mobile.gif">
+  <img align="center" alt="mobile" src="./todo-list/img/mobile.gif">
 
 ## :rocket: Tecnologias
 
