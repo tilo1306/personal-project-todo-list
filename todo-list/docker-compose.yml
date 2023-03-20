@@ -1,26 +1,30 @@
-version: "3.7"
+version: "3.9"
 services:
   db:
     image: postgres
     container_name: todolist-postgres
     restart: always
-    volumes:
-      - todolist-data:/data/postgresql
     ports:
-      - 80:5432
+      - 5432:5432
     environment:
-      - POSTGRES_DB:todolist
-      - POSTGRES_USER:todolist
-      - POSTGRES_PASSWORD:todolist
+      - POSTGRES_DB=todolist
+      - POSTGRES_USER=todolist
+      - POSTGRES_PASSWORD=todolist
+    volumes:
+      - pgdata:/data/postgres
 
   backend:
     build: ./backend
     container_name: backend
     environment:
-      - DATABASE_URL=postgresql://todolist:todolist@localhost:5432/todolist?schema=public
-      - JWT_SECRET_KEY=1234
+     - DATABASE_URL=postgresql://todolist:todolist@db:5432/todolist?schema=public
+     - DATABASE_URL_TEST=postgresql://todolist:todolist@db:5432/todolist_test?schema=public
+     - JWT_SECRET_KEY=1234
+    command: npm run start:migrate:dev
     ports:
       - "3001:3001"
+    links:
+      - db
     depends_on:
       - db
 
@@ -33,5 +37,5 @@ services:
       - backend
 
 volumes:
-  todolist-data:
+  pgdata:
     driver: local
